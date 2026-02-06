@@ -21,6 +21,7 @@ public class ProductRepositoryTest {
     @BeforeEach
     void setUp() {
     }
+
     @Test
     void testCreateAndFind() {
         Product product = new Product();
@@ -68,5 +69,4 @@ public class ProductRepositoryTest {
 
         assertFalse(productIterator.hasNext());
     }
-
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.classfile.instruction.StackInstruction;
 import java.util.List;
 
 @Controller
@@ -50,5 +51,11 @@ public class ProductController {
     public String editProductPost(@ModelAttribute Product product) {
         service.update(product);
         return "redirect:list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable String id) {
+        service.delete(id);
+        return "redirect:/product/list";
     }
 }
