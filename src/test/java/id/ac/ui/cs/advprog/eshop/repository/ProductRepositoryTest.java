@@ -69,4 +69,63 @@ public class ProductRepositoryTest {
 
         assertFalse(productIterator.hasNext());
     }
+    @Test
+    void testEditProduct() {
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("mie ayam bangka");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        Product updateProduct = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("mie ayam bangladesh");
+        product.setProductQuantity(10);
+        productRepository.update(product);
+
+        Product foundProduct = productRepository.findById(product.getProductId());
+        assertNotNull(foundProduct);
+        assertEquals("mie ayam bangladesh", foundProduct.getProductName());
+        assertEquals(10, foundProduct.getProductQuantity());
+    }
+
+    @Test
+    void testEditNonExistProduct() {
+        Product product = new Product();
+        product.setProductId("id-kocakgeming");
+        product.setProductName("Produk Gaib");
+
+        Product result = productRepository.update(product);
+        assertNull(result);
+    }
+
+    @Test
+    void testDeleteProduct() {
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("mie ayam bangka");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        productRepository.delete(product.getProductId());
+
+        Iterator<Product> productIterator = productRepository.findAll();
+        assertFalse(productIterator.hasNext());
+    }
+
+    void testDeleteAndKeepOthers() {
+        Product product1 = new Product();
+        product1.setProductId("id-1");
+        productRepository.create(product1);
+
+        Product product2 = new Product();
+        product2.setProductId("id-2");
+        productRepository.create(product2);
+
+        productRepository.delete(product1.getProductId());
+        Iterator<Product> productIterator = productRepository.findAll();
+        Product remainingProduct = productIterator.next();
+        assertEquals("id-2", remainingProduct.getProductId());
+        assertFalse(productIterator.hasNext());
+    }
 }
