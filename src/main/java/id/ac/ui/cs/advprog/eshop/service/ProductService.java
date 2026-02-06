@@ -7,4 +7,9 @@ import java.util.List;
 public interface ProductService {
     public Product create(Product product);
     public List<Product> findAll();
+
+    // edit product function
+    Product findById(String id);
+    Product update(Product product);
+
 }
