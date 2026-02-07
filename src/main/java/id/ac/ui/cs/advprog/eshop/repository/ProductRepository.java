@@ -21,6 +21,10 @@ public class ProductRepository {
     }
 
     public Product findById(String id) {
+        if (id == null || productData == null) {
+            return null;
+        }
+
         for (Product product : productData) {
             if (product.getProductId().equals(id)) {
                 return product;
@@ -30,6 +34,7 @@ public class ProductRepository {
     }
 
     public Product update(Product product) {
+        
         for (int i = 0; i < productData.size(); i++) {
             if (productData.get(i).getProductId().equals(product.getProductId())) {
                 productData.set(i, product);
