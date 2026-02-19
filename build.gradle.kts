@@ -43,6 +43,9 @@ dependencies {
     testImplementation("io.github.bonigarcia:selenium-jupiter:${seleniumJupiterVersion}")
     testImplementation("io.github.bonigarcia:webdrivermanager:${webdrivermanagerVersion}")
     testImplementation("org.junit.jupiter:junit-jupiter:${junitJupiterVersion}")
+
+    pmd("net.sourceforge.pmd:pmd-ant:7.0.0-rc4")
+    pmd("net.sourceforge.pmd:pmd-java:7.0.0-rc4")
 }
 
 tasks.withType<Test> {
