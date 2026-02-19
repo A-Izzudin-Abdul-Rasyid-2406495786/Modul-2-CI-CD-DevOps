@@ -96,4 +96,14 @@ class ProductControllerTest {
                 .andExpect(redirectedUrl("/product/list"));
         verify(productService, times(1)).delete(product.getProductId());
     }
+
+    @Test
+    void testCreateProductPostWithNullId() throws Exception {
+        product.setProductId(null);
+        mockMvc.perform(post("/product/create")
+                        .flashAttr("product", product))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("list"));
+        verify(productService, times(1)).create(any(Product.class));
+    }
 }

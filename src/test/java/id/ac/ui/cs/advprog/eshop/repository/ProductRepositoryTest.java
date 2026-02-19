@@ -144,4 +144,17 @@ public class ProductRepositoryTest {
     void testDeleteNullId() {
         assertDoesNotThrow(() -> productRepository.delete(null));
     }
+
+    @Test
+    void testEditProductWithExistingListButNoMatch() {
+        Product product1 = new Product();
+        product1.setProductId("id-1");
+        productRepository.create(product1);
+
+        Product product2 = new Product();
+        product2.setProductId("id-ga-ada");
+
+        Product result = productRepository.update(product2);
+        assertNull(result);
+    }
 }

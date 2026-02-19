@@ -5,6 +5,7 @@ val junitJupiterVersion = "5.9.1"
 plugins {
     java
     jacoco
+    id("pmd")
     id("org.springframework.boot") version "3.5.10"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -93,4 +94,17 @@ tasks.jacocoTestReport {
             }
         })
     )
+}
+
+pmd {
+    toolVersion = "7.0.0-rc4"
+    isConsoleOutput = true
+    rulesMinimumPriority = 5
+}
+
+tasks.withType<Pmd>().configureEach {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
 }
