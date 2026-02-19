@@ -113,6 +113,7 @@ public class ProductRepositoryTest {
         assertFalse(productIterator.hasNext());
     }
 
+    @Test
     void testDeleteAndKeepOthers() {
         Product product1 = new Product();
         product1.setProductId("id-1");
@@ -127,5 +128,20 @@ public class ProductRepositoryTest {
         Product remainingProduct = productIterator.next();
         assertEquals("id-2", remainingProduct.getProductId());
         assertFalse(productIterator.hasNext());
+    }
+
+    @Test
+    void testFindByIdNull() {
+        assertNull(productRepository.findById(null));
+    }
+
+    @Test
+    void testFindByIdNotFound() {
+        assertNull(productRepository.findById("id-yang-tidak-ada"));
+    }
+
+    @Test
+    void testDeleteNullId() {
+        assertDoesNotThrow(() -> productRepository.delete(null));
     }
 }
