@@ -35,4 +35,4 @@ Pembuatan kelas baru dengan menyalin struktur yang sama akan membuat kode menjad
 
   Untuk memperbaikinya menurutku adalah prosedur setup dan variabel umum harus dikumpulkan ke dalam sebuah Base Class yang kemudian diwariskan ke setiap kelas tes spesifik. Ini akan membuat kode lebih bersih, mudah dibaca, dan lebih efisien untuk dikembangkan.
 
-# Reflection 3 (CI/CD & DevOpsFile)
+# Reflection 3 (CI/CD & DevOps)
