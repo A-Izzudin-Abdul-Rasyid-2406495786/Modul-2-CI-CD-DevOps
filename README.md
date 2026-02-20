@@ -1,4 +1,4 @@
-# Reflection 1
+# Reflection 1 (CODING STANDARDS)
 - **Secure Coding**: 
 Aku melakukan pengecekan null untuk menghindari `NullPointerException` dan memastikan ID produk selalu valid sebelum melakukan operasi hapus atau edit.
 - **Clean Code:** 
@@ -15,7 +15,7 @@ Penamaan variabel dan metode yang jelas (`productData`, `delete`, `createProduct
   Mengubah redirect dari `"redirect:product/list"` menjadi `"redirect:/product/list"` dengan menambahkan garis miring di depannya.  
   Ternyata salah taruh "/" aja dapat menyebabkan masalah yang fatal.
   
-# Reflection 2
+# Reflection 2 (CODING STANDARDS)
 ## Unit test
 - `How many unit tests should be made in a class?`
 Menurutku tidak ada angka pasti dalam unit test, tapi selama itu mencakup semua skenario. Skenario positif, skenario negatif, skenario null, dll. maka akan menghasilkan code coverage yang semakin tinggi dan membuat kode kita lebih "kokoh" dan tidak rentan terhadap bug. Meskipun tidak menjamin akan 100% bebas dari bug.
@@ -34,3 +34,5 @@ Pembuatan kelas baru dengan menyalin struktur yang sama akan membuat kode menjad
   Pembuatan unit test baru dengan copy struktur yang sama akan menyebabkan duplikasi kode yang melanggar prinsip DRY (Don't Repeat Yourself) dan mempersulit maintanance di masa depan.
 
   Untuk memperbaikinya menurutku adalah prosedur setup dan variabel umum harus dikumpulkan ke dalam sebuah Base Class yang kemudian diwariskan ke setiap kelas tes spesifik. Ini akan membuat kode lebih bersih, mudah dibaca, dan lebih efisien untuk dikembangkan.
+
+# Reflection 3 (CI/CD & DevOpsFile)
