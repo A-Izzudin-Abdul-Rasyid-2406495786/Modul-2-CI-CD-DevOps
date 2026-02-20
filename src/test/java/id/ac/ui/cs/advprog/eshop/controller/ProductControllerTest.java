@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.net.URL;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.*;
@@ -18,6 +19,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ProductController.class)
 class ProductControllerTest {
+    private static final String REDIRECT_LIST = "redirect:list";
+    private static final String PRODUCT_ATTR = "product";
+    private static final String URL_CREATE = "/product/create";
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,16 +41,16 @@ class ProductControllerTest {
 
     @Test
     void testCreateProductPage() throws Exception {
-        mockMvc.perform(get("/product/create"))
+        mockMvc.perform(get(URL_CREATE))
                 .andExpect(status().isOk())
                 .andExpect(view().name("CreateProduct"))
-                .andExpect(model().attributeExists("product"));
+                .andExpect(model().attributeExists(PRODUCT_ATTR));
     }
 
     @Test
     void testCreateProductPost() throws Exception {
-        mockMvc.perform(post("/product/create")
-                        .flashAttr("product", product))
+        mockMvc.perform(post(URL_CREATE)
+                        .flashAttr(PRODUCT_ATTR, product))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("list"));
         verify(productService, times(1)).create(any(Product.class));
@@ -54,9 +58,9 @@ class ProductControllerTest {
 
     @Test
     void testCreateProductPostWithEmptyId() throws Exception {
-        product.setProductId(""); // Test if ID is empty
-        mockMvc.perform(post("/product/create")
-                        .flashAttr("product", product))
+        product.setProductId("");
+        mockMvc.perform(post(URL_CREATE)
+                        .flashAttr(PRODUCT_ATTR, product))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("list"));
         verify(productService, times(1)).create(any(Product.class));
@@ -77,13 +81,13 @@ class ProductControllerTest {
         mockMvc.perform(get("/product/edit/" + product.getProductId()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("EditProduct"))
-                .andExpect(model().attributeExists("product"));
+                .andExpect(model().attributeExists(PRODUCT_ATTR));
     }
 
     @Test
     void testEditProductPost() throws Exception {
         mockMvc.perform(post("/product/edit")
-                        .flashAttr("product", product))
+                        .flashAttr(PRODUCT_ATTR, product))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("list"));
         verify(productService, times(1)).update(any(Product.class));
@@ -100,8 +104,8 @@ class ProductControllerTest {
     @Test
     void testCreateProductPostWithNullId() throws Exception {
         product.setProductId(null);
-        mockMvc.perform(post("/product/create")
-                        .flashAttr("product", product))
+        mockMvc.perform(post(URL_CREATE)
+                        .flashAttr(PRODUCT_ATTR, product))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("list"));
         verify(productService, times(1)).create(any(Product.class));
