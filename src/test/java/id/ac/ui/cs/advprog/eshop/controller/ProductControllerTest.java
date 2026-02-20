@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ProductController.class)
 class ProductControllerTest {
-    private static final String REDIRECT_LIST = "redirect:list";
+    private static final String LIST = "list";
     private static final String PRODUCT_ATTR = "product";
     private static final String URL_CREATE = "/product/create";
 
@@ -52,7 +52,7 @@ class ProductControllerTest {
         mockMvc.perform(post(URL_CREATE)
                         .flashAttr(PRODUCT_ATTR, product))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("list"));
+                .andExpect(redirectedUrl(LIST));
         verify(productService, times(1)).create(any(Product.class));
     }
 
@@ -62,7 +62,7 @@ class ProductControllerTest {
         mockMvc.perform(post(URL_CREATE)
                         .flashAttr(PRODUCT_ATTR, product))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("list"));
+                .andExpect(redirectedUrl(LIST));
         verify(productService, times(1)).create(any(Product.class));
     }
 
@@ -89,7 +89,7 @@ class ProductControllerTest {
         mockMvc.perform(post("/product/edit")
                         .flashAttr(PRODUCT_ATTR, product))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("list"));
+                .andExpect(redirectedUrl(LIST));
         verify(productService, times(1)).update(any(Product.class));
     }
 
@@ -107,7 +107,7 @@ class ProductControllerTest {
         mockMvc.perform(post(URL_CREATE)
                         .flashAttr(PRODUCT_ATTR, product))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("list"));
+                .andExpect(redirectedUrl(LIST));
         verify(productService, times(1)).create(any(Product.class));
     }
 }
