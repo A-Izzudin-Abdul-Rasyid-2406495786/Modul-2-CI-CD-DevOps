@@ -71,6 +71,7 @@ public class ProductRepositoryTest {
 
         assertFalse(productIterator.hasNext());
     }
+
     @Test
     void testEditProduct() {
         Product product = new Product();
@@ -158,5 +159,15 @@ public class ProductRepositoryTest {
 
         Product result = productRepository.update(product2);
         assertNull(result);
+    }
+
+    @Test
+    void testFindByIdIfMoreThanOneProductAndNotFound() {
+        Product product1 = new Product();
+        product1.setProductId("id-1");
+        product1.setProductName("Sampo");
+        productRepository.create(product1);
+
+        assertNull(productRepository.findById("id-yang-tidak-ada"));
     }
 }
