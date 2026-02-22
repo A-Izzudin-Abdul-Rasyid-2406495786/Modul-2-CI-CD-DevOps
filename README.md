@@ -42,7 +42,8 @@ Pembuatan kelas baru dengan menyalin struktur yang sama akan membuat kode menjad
 ### 1. Code Quality Issues and Fix Strategy
 Selama pengerjaan tutorial dan latihan ini, saya menemukan dan memperbaiki beberapa masalah terkait kualitas kode dan infrastruktur:
 
-* **Gradle Execution Permission:** * **Masalah:** Pada alur CI (`ci.yml`), proses *unit test* gagal dijalankan karena file `gradlew` tidak memiliki izin eksekusi (*permission denied*).
+* **Gradle Execution Permission:**
+    * **Masalah:** Pada alur CI (`ci.yml`), proses *unit test* gagal dijalankan karena file `gradlew` tidak memiliki izin eksekusi (*permission denied*).
     * **Strategi Perbaikan:** Saya menambahkan perintah `chmod +x gradlew` dalam langkah-langkah *workflow* GitHub Actions sebelum menjalankan perintah pengujian. Hal ini memastikan *runner* CI memiliki izin untuk mengeksekusi *wrapper* Gradle.
 * **PMD Failure & Test Coverage:**
     * **Masalah:** Analisis kode statis menggunakan PMD gagal karena ditemukan beberapa pelanggaran standar kode dan cakupan pengujian (*test coverage*) yang belum memadai.
