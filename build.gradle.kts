@@ -5,6 +5,7 @@ val junitJupiterVersion = "5.9.1"
 plugins {
     java
     jacoco
+    id("pmd")
     id("org.springframework.boot") version "3.5.10"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -42,6 +43,9 @@ dependencies {
     testImplementation("io.github.bonigarcia:selenium-jupiter:${seleniumJupiterVersion}")
     testImplementation("io.github.bonigarcia:webdrivermanager:${webdrivermanagerVersion}")
     testImplementation("org.junit.jupiter:junit-jupiter:${junitJupiterVersion}")
+
+    pmd("net.sourceforge.pmd:pmd-ant:7.0.0-rc4")
+    pmd("net.sourceforge.pmd:pmd-java:7.0.0-rc4")
 }
 
 tasks.withType<Test> {
@@ -82,4 +86,28 @@ tasks.test {
 
 tasks.jacocoTestReport {
     dependsOn(tasks.test)
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+    }
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) {
+                exclude("**/EshopApplication*")
+            }
+        })
+    )
+}
+
+pmd {
+    toolVersion = "7.0.0-rc4"
+    isConsoleOutput = true
+    rulesMinimumPriority = 5
+}
+
+tasks.withType<Pmd>().configureEach {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
 }
