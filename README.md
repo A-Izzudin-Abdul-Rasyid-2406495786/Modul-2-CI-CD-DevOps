@@ -36,3 +36,25 @@ Pembuatan kelas baru dengan menyalin struktur yang sama akan membuat kode menjad
   Untuk memperbaikinya menurutku adalah prosedur setup dan variabel umum harus dikumpulkan ke dalam sebuah Base Class yang kemudian diwariskan ke setiap kelas tes spesifik. Ini akan membuat kode lebih bersih, mudah dibaca, dan lebih efisien untuk dikembangkan.
 
 # Reflection 3 (CI/CD & DevOps)
+
+### 1. Code Quality Issues and Fix Strategy
+Selama pengerjaan tutorial dan latihan ini, saya menemukan dan memperbaiki beberapa masalah terkait kualitas kode dan infrastruktur:
+
+* **Gradle Execution Permission:** * **Masalah:** Pada alur CI (`ci.yml`), proses *unit test* gagal dijalankan karena file `gradlew` tidak memiliki izin eksekusi (*permission denied*).
+    * **Strategi Perbaikan:** Saya menambahkan perintah `chmod +x gradlew` dalam langkah-langkah *workflow* GitHub Actions sebelum menjalankan perintah pengujian. Hal ini memastikan *runner* CI memiliki izin untuk mengeksekusi *wrapper* Gradle.
+* **PMD Failure & Test Coverage:**
+    * **Masalah:** Analisis kode statis menggunakan PMD gagal karena ditemukan beberapa pelanggaran standar kode dan cakupan pengujian (*test coverage*) yang belum memadai.
+    * **Strategi Perbaikan:** Saya meninjau kembali laporan PMD, menghapus variabel yang tidak digunakan, serta meningkatkan jumlah *unit test* untuk mencakup skenario negatif. Dengan meningkatkan *test coverage*, integritas kode lebih terjaga dan lolos dari standar kualitas yang ditetapkan.
+* **Deployment Configuration:**
+    * **Masalah:** Aplikasi berhasil di-*build* tetapi gagal saat tahap *deployment* di Koyeb karena adanya kesalahan konfigurasi port (TCP health check failed).
+    * **Strategi Perbaikan:** Saya menyesuaikan pengaturan di Dashboard Koyeb agar melakukan pengecekan pada port `8080` (sesuai dengan port default Spring Boot) dan memastikan *Environment Variables* telah terkonfigurasi dengan benar.
+
+---
+
+### 2. CI/CD Consistency Reflection
+Berdasarkan implementasi alur kerja (workflow) pada GitHub Actions saat ini, saya berpendapat bahwa proyek ini **sudah memenuhi definisi Continuous Integration (CI) dan Continuous Deployment (CD)**. 
+
+Alasannya adalah:
+1.  **Continuous Integration:** Setiap kali saya melakukan *push* atau *pull request* ke repositori, GitHub Actions secara otomatis menjalankan *workflow* `ci.yml` yang mencakup proses *build* dan *automated testing*. Hal ini memastikan bahwa kode baru selalu terintegrasi dengan kode lama tanpa merusak fungsi yang sudah ada.
+2.  **Continuous Deployment:** Implementasi ini telah terhubung langsung dengan platform PaaS (Koyeb). Setelah kode lolos semua tahapan pengujian dan analisis kualitas di branch yang ditentukan, aplikasi akan langsung diperbarui di server tanpa intervensi manual, sehingga perubahan dapat langsung dirasakan oleh pengguna.
+3.  **Automated Quality Gate:** Adanya integrasi alat analisis seperti PMD dan Scorecard memastikan bahwa setiap perubahan kode tidak hanya "berjalan", tetapi juga memenuhi standar keamanan dan kebersihan kode yang baik sebelum dianggap layak untuk dideploy.
