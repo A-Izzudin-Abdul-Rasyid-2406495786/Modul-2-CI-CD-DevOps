@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.net.URL;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.*;
@@ -90,7 +89,7 @@ class ProductControllerTest {
                         .flashAttr(PRODUCT_ATTR, product))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl(LIST));
-        verify(productService, times(1)).update(any(Product.class));
+        verify(productService, times(1)).update(product.getProductId(), any(Product.class));
     }
 
     @Test
