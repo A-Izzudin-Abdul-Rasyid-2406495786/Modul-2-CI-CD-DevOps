@@ -70,7 +70,7 @@ class ProductControllerTest {
         when(productService.findAll()).thenReturn(Arrays.asList(product));
         mockMvc.perform(get("/product/list"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("productList"))
+                .andExpect(view().name("ProductList"))
                 .andExpect(model().attributeExists("products"));
     }
 
@@ -79,7 +79,7 @@ class ProductControllerTest {
         when(productService.findById(product.getProductId())).thenReturn(product);
         mockMvc.perform(get("/product/edit/" + product.getProductId()))
                 .andExpect(status().isOk())
-                .andExpect(view().name("editProduct"))
+                .andExpect(view().name("EditProduct"))
                 .andExpect(model().attributeExists(PRODUCT_ATTR));
     }
 
