@@ -63,7 +63,7 @@ class ProductServiceImplTest {
     @Test
     void testUpdateProduct() {
         when(productRepository.update(product)).thenReturn(product);
-        Product updatedProduct = productService.update(product);
+        Product updatedProduct = productService.update(product.getProductId(), product);
         assertEquals(product.getProductId(), updatedProduct.getProductId());
     }
 
